@@ -1,0 +1,4 @@
+* text=auto
+*.doc binary
+*.docx binary
+*.xlsx binary
