@@ -12,8 +12,7 @@ import time
 try:
     import serial
 except ImportError:
-    print("pyserial gerekli: pip install pyserial", file=sys.stderr)
-    sys.exit(1)
+    serial = None
 
 
 def main():
@@ -22,6 +21,8 @@ def main():
     p.add_argument("-b", "--baud", type=int, default=115200, help="Baud")
     p.add_argument("-t", "--timeout", type=float, default=15.0, help="Kaç saniye dinlenecek (varsayılan 15)")
     args = p.parse_args()
+    if serial is None:
+        p.error("pyserial gerekli: python -m pip install -r requirements.txt")
 
     try:
         ser = serial.Serial(args.port, args.baud, timeout=0.2)

@@ -12,8 +12,7 @@ import time
 try:
     import serial
 except ImportError:
-    print("pyserial gerekli: pip install pyserial", file=sys.stderr)
-    sys.exit(1)
+    serial = None
 
 try:
     from intelhex import IntelHex
@@ -182,6 +181,8 @@ def main():
     parser.add_argument("--check", action="store_true", help="Sadece kontrol et: bu dosya cihazda var mı? (yükleme yapma)")
     parser.add_argument("--link-test", action="store_true", help="UART link testi: 10 bytelik paket gonder, STM'de ulasip ulasmadigini dogrula")
     args = parser.parse_args()
+    if serial is None:
+        parser.error("pyserial gerekli: python -m pip install -r requirements.txt")
 
     if args.link_test:
         run_link_test(args)
